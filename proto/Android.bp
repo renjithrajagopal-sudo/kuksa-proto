@@ -1,67 +1,134 @@
 
-
-// Copyright (C) 2023 The Android Open Source Project
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
-package {
-    default_applicable_licenses: ["external_eclipse_kuksa_license"],
-}
-
-license {
-    name: "external_eclipse_kuksa_license",
-    visibility: [":__subpackages__"],
-    license_kinds: [
-        "SPDX-license-identifier-Apache-2.0",
+genrule {
+    name: "KuksaValV1ProtoStub_h@grpc",
+    tools: [
+        "aprotoc",
+        "protoc-gen-grpc-cpp-plugin",
     ],
-    license_text: [
-        "LICENSE",
-    ],
-}
-
-filegroup {
-    name: "kuksa_val_v1_protos",
+    cmd: "$(location aprotoc) -Ivendor/sdv/extensions/platform/vehicle-data-broker/eclipse-kuksa/proto -Iexternal/protobuf/src -Iexternal/protobuf/src/google/protobuf --plugin=protoc-gen-grpc=$(location protoc-gen-grpc-cpp-plugin) $(location kuksa/val/v1/types.proto) $(location kuksa/val/v1/val.proto) --grpc_out=$(genDir) --cpp_out=$(genDir)",
     srcs: [
         "kuksa/val/v1/types.proto",
         "kuksa/val/v1/val.proto",
+        ":libprotobuf-internal-protos",
     ],
+    out: [
+        "kuksa/val/v1/types.grpc.pb.h",
+        "kuksa/val/v1/types.pb.h",
+        "kuksa/val/v1/val.grpc.pb.h",
+        "kuksa/val/v1/val.pb.h",
+    ],
+    visibility: ["//visibility:private"],
 }
 
-cc_library {
-    name: "eclipse-kuksa-cc-proto-lite",
-    srcs: [
-        ":kuksa_val_v1_protos",
+genrule {
+    name: "KuksaValV1ProtoStub_cc@grpc",
+    tools: [
+        "aprotoc",
+        "protoc-gen-grpc-cpp-plugin",
     ],
-    proto: {
-        type: "lite",
-        export_proto_headers: true,
-        canonical_path_from_root: false,
-        include_dirs: [
-            "external/protobuf/src",
-        ],
-    },
+    cmd: "$(location aprotoc) -Ivendor/sdv/extensions/platform/vehicle-data-broker/eclipse-kuksa/proto -Iexternal/protobuf/src -Iexternal/protobuf/src/google/protobuf --plugin=protoc-gen-grpc=$(location protoc-gen-grpc-cpp-plugin) $(location kuksa/val/v1/types.proto) $(location kuksa/val/v1/val.proto) --grpc_out=$(genDir) --cpp_out=$(genDir)",
+    srcs: [
+        "kuksa/val/v1/types.proto",
+        "kuksa/val/v1/val.proto",
+        ":libprotobuf-internal-protos",
+    ],
+    out: [
+        "kuksa/val/v1/types.pb.cc",
+        "kuksa/val/v1/val.pb.cc",
+        "kuksa/val/v1/types.grpc.pb.cc",
+        "kuksa/val/v1/val.grpc.pb.cc",
+    ],
+    visibility: ["//visibility:private"],
+}
 
+genrule {
+    name: "KuksaValV2ProtoStub_h@grpc",
+    tools: [
+        "aprotoc",
+        "protoc-gen-grpc-cpp-plugin",
+    ],
+    cmd: "$(location aprotoc) -Ivendor/sdv/extensions/platform/vehicle-data-broker/eclipse-kuksa/proto -Iexternal/protobuf/src --plugin=protoc-gen-grpc=$(location protoc-gen-grpc-cpp-plugin) $(location kuksa/val/v2/types.proto) $(location kuksa/val/v2/val.proto) --grpc_out=$(genDir) --cpp_out=$(genDir)",
+    srcs: [
+        "kuksa/val/v2/types.proto",
+        "kuksa/val/v2/val.proto",
+        ":libprotobuf-internal-protos",
+    ],
+    out: [
+        "kuksa/val/v2/types.pb.h",
+        "kuksa/val/v2/val.pb.h",
+        "kuksa/val/v2/types.grpc.pb.h",
+        "kuksa/val/v2/val.grpc.pb.h",
+    ],
+    visibility: ["//visibility:private"],
+}
+
+genrule {
+    name: "KuksaValV2ProtoStub_cc@grpc",
+    tools: [
+        "aprotoc",
+        "protoc-gen-grpc-cpp-plugin",
+    ],
+    cmd: "$(location aprotoc) -Ivendor/sdv/extensions/platform/vehicle-data-broker/eclipse-kuksa/proto -Iexternal/protobuf/src --plugin=protoc-gen-grpc=$(location protoc-gen-grpc-cpp-plugin) $(location kuksa/val/v2/types.proto) $(location kuksa/val/v2/val.proto) --grpc_out=$(genDir) --cpp_out=$(genDir)",
+    srcs: [
+        "kuksa/val/v2/types.proto",
+        "kuksa/val/v2/val.proto",
+        ":libprotobuf-internal-protos",
+    ],
+    out: [
+        "kuksa/val/v2/types.pb.cc",
+        "kuksa/val/v2/val.pb.cc",
+        "kuksa/val/v2/types.grpc.pb.cc",
+        "kuksa/val/v2/val.grpc.pb.cc",
+    ],
+    visibility: ["//visibility:private"],
+}
+
+cc_library_static {
+    name: "kuksa-grpc-v1-lib",
+    vendor: true,
+    host_supported: true,
+    include_dirs: [
+        "external/protobuf/src",
+    ],
+    generated_headers: [
+        "KuksaValV1ProtoStub_h@grpc",
+    ],
+    export_generated_headers: [
+        "KuksaValV1ProtoStub_h@grpc",
+    ],
+    generated_sources: [
+        "KuksaValV1ProtoStub_cc@grpc",
+    ],
     shared_libs: [
         "libgrpc++",
         "libprotobuf-cpp-full",
     ],
-
     cflags: [
         "-Wno-unused-parameter",
-        "-DGOOGLE_PROTOBUF_NO_RTTI=1",
     ],
+}
 
-    tidy_checks: [
-        "-clang-analyzer-optin.cplusplus.UninitializedObject",
+cc_library_static {
+    name: "kuksa-grpc-v2-lib",
+    vendor: true,
+    host_supported: true,
+    include_dirs: [
+        "external/protobuf/src",
+    ],
+    generated_headers: [
+        "KuksaValV2ProtoStub_h@grpc",
+    ],
+    export_generated_headers: [
+        "KuksaValV2ProtoStub_h@grpc",
+    ],
+    generated_sources: [
+        "KuksaValV2ProtoStub_cc@grpc",
+    ],
+    shared_libs: [
+        "libgrpc++",
+        "libprotobuf-cpp-full",
+    ],
+    cflags: [
+        "-Wno-unused-parameter",
     ],
 }
