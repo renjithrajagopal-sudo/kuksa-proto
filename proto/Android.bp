@@ -5,7 +5,7 @@ genrule {
         "aprotoc",
         "protoc-gen-grpc-cpp-plugin",
     ],
-    cmd: "$(location aprotoc) -Ivendor/sdv/extensions/platform/vehicle-data-broker/eclipse-kuksa/proto -Iexternal/protobuf/src -Iexternal/protobuf/src/google/protobuf --plugin=protoc-gen-grpc=$(location protoc-gen-grpc-cpp-plugin) $(location kuksa/val/v1/types.proto) $(location kuksa/val/v1/val.proto) --grpc_out=$(genDir) --cpp_out=$(genDir)",
+    cmd: "$(location aprotoc) -Ivendor/sdv/extensions/platform/external/eclipse-kuksa/proto -Iexternal/protobuf/src -Iexternal/protobuf/src/google/protobuf --plugin=protoc-gen-grpc=$(location protoc-gen-grpc-cpp-plugin) $(location kuksa/val/v1/types.proto) $(location kuksa/val/v1/val.proto) --grpc_out=$(genDir) --cpp_out=$(genDir)",
     srcs: [
         "kuksa/val/v1/types.proto",
         "kuksa/val/v1/val.proto",
@@ -26,7 +26,7 @@ genrule {
         "aprotoc",
         "protoc-gen-grpc-cpp-plugin",
     ],
-    cmd: "$(location aprotoc) -Ivendor/sdv/extensions/platform/vehicle-data-broker/eclipse-kuksa/proto -Iexternal/protobuf/src -Iexternal/protobuf/src/google/protobuf --plugin=protoc-gen-grpc=$(location protoc-gen-grpc-cpp-plugin) $(location kuksa/val/v1/types.proto) $(location kuksa/val/v1/val.proto) --grpc_out=$(genDir) --cpp_out=$(genDir)",
+    cmd: "$(location aprotoc) -Ivendor/sdv/extensions/platform/external/eclipse-kuksa/proto -Iexternal/protobuf/src -Iexternal/protobuf/src/google/protobuf --plugin=protoc-gen-grpc=$(location protoc-gen-grpc-cpp-plugin) $(location kuksa/val/v1/types.proto) $(location kuksa/val/v1/val.proto) --grpc_out=$(genDir) --cpp_out=$(genDir)",
     srcs: [
         "kuksa/val/v1/types.proto",
         "kuksa/val/v1/val.proto",
@@ -47,7 +47,7 @@ genrule {
         "aprotoc",
         "protoc-gen-grpc-cpp-plugin",
     ],
-    cmd: "$(location aprotoc) -Ivendor/sdv/extensions/platform/vehicle-data-broker/eclipse-kuksa/proto -Iexternal/protobuf/src --plugin=protoc-gen-grpc=$(location protoc-gen-grpc-cpp-plugin) $(location kuksa/val/v2/types.proto) $(location kuksa/val/v2/val.proto) --grpc_out=$(genDir) --cpp_out=$(genDir)",
+    cmd: "$(location aprotoc) -Ivendor/sdv/extensions/platform/external/eclipse-kuksa/proto -Iexternal/protobuf/src --plugin=protoc-gen-grpc=$(location protoc-gen-grpc-cpp-plugin) $(location kuksa/val/v2/types.proto) $(location kuksa/val/v2/val.proto) --grpc_out=$(genDir) --cpp_out=$(genDir)",
     srcs: [
         "kuksa/val/v2/types.proto",
         "kuksa/val/v2/val.proto",
@@ -68,7 +68,7 @@ genrule {
         "aprotoc",
         "protoc-gen-grpc-cpp-plugin",
     ],
-    cmd: "$(location aprotoc) -Ivendor/sdv/extensions/platform/vehicle-data-broker/eclipse-kuksa/proto -Iexternal/protobuf/src --plugin=protoc-gen-grpc=$(location protoc-gen-grpc-cpp-plugin) $(location kuksa/val/v2/types.proto) $(location kuksa/val/v2/val.proto) --grpc_out=$(genDir) --cpp_out=$(genDir)",
+    cmd: "$(location aprotoc) -Ivendor/sdv/extensions/platform/external/eclipse-kuksa/proto -Iexternal/protobuf/src --plugin=protoc-gen-grpc=$(location protoc-gen-grpc-cpp-plugin) $(location kuksa/val/v2/types.proto) $(location kuksa/val/v2/val.proto) --grpc_out=$(genDir) --cpp_out=$(genDir)",
     srcs: [
         "kuksa/val/v2/types.proto",
         "kuksa/val/v2/val.proto",
